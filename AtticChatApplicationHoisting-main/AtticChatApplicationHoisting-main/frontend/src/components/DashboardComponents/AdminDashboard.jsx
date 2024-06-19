@@ -3,7 +3,8 @@ import Sidebar from '../admin/Sidebar';
 import back19 from '../../assests/back19.png'
 import back15 from '../../assests/back15.png'
 import back13 from '../../assests/back13.png'
-
+import { BASE_URL } from "../../constants";
+import Table from "./Table";
 
 
 const data = {
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const AllManagers = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/manager/getAllManagers');
+        const response = await fetch(`${BASE_URL}/api/manager/getAllManagers`);
         if (response.ok) {
           const data = await response.json();
           setManager(data);
@@ -44,7 +45,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const AllEmployees = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/employeeRegistration');
+        const response = await fetch(`${BASE_URL}/api/employeeRegistration`);
         if (response.ok) {
           const data = await response.json();
           setEmployee(data);
@@ -63,14 +64,14 @@ const totalBranches=uniqueBranches.size
 
   return (
     <div
-      className="lg:flex block bg-cover bg-center min-h-screen relative bg-[#e8effe]"
+      className="lg:flex block bg-cover bg-center min-h-screen relative bg-[#f6f5fb]"
     >
       <Sidebar />
       <div className="flex-1 p-6 bg-opacity-75 bg-white relative ">
         <div className="lg:text-4xl md:text-2xl text-4xl font-bold bg-[#5443c3] h-auto text-white w-full lg:h-24  mb-5 py-5 pl-5 flex flex-col items-left justify-start"  >
           Attic's Chat-up Dashboard</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          <div className="p-4 rounded-lg shadow-lg" style={{ backgroundImage: `url(${back15})` }}>
+          <div className="p-4 rounded-lg shadow-lg" style={{ backgroundImage:`url(${back15})` }}>
             <div className="lg:text-xl text-lg font-bold text-white">No of Registered Employees</div>
             <div className="text-2xl text-white">{employee.length}</div>
           </div>
@@ -82,8 +83,11 @@ const totalBranches=uniqueBranches.size
             <div className="lg:text-xl text-lg font-bold text-white">No of Branches</div>
             <div className="text-2xl text-white">{totalBranches}</div>
           </div>
+   
         </div>
-       
+        <div className=" w-full">
+          <Table />
+        </div>
       </div>
     
     </div>

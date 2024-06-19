@@ -10,6 +10,7 @@ import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import { FaFolderPlus } from "react-icons/fa";
+import { BASE_URL } from "../../constants";
 
 export default function FileUploadModel({ sender, recipient }) {
   const [open, setOpen] = React.useState(false);

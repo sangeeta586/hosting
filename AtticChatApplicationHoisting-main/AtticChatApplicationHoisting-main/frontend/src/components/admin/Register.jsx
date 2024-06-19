@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { emplyeRegistration } from '../../constants';
 import Sidebar from './Sidebar';
 import EmployeeDetails from './EmployeeDetails';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Register = () => {
   const [form, setForm] = useState({
@@ -45,7 +47,18 @@ export const Register = () => {
         }
       });
       console.log('Registered user', res.data);
+      toast.success('User registered successfully!');
       setIsModalOpen(false);
+      setForm({
+        name: '',
+        password: '',
+        confirmPassword: '',
+        employeeId: '',
+        state: '',
+        language: '',
+        grade: 'A',
+        group: 'Karnataka Team'
+      });
     } catch (error) {
       console.log("An error occurred during registering a user", error);
       setError(error.response?.data?.error || "An unexpected error occurred");
@@ -53,22 +66,23 @@ export const Register = () => {
   };
 
   return (
-    <div className="lg:flex block">
+    <div className="lg:flex block bg-[#f6f5fb]">
       <Sidebar />
       <div className="flex-1 p-6">
-        <div className="flex items-center mb-4 flex-col">
+        <div className="flex items-center justify-between mb-4 flex-col lg:flex-row">
+          <h1 className="text-xl sm:text-2xl font-bold text-[#5443c3]">Employee Details</h1>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded h-8 mr-2"
+            className="bg-[#5443c3] hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full h-10 mr-2 mt-4 lg:mt-0"
           >
             Open Registration Form
           </button>
-          <EmployeeDetails />
         </div>
-        {isModalOpen && ( 
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <EmployeeDetails />
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-lg mx-2 sm:mx-4 md:mx-6 lg:mx-auto xl:mx-auto">
-              <h2 className="text-2xl font-bold mb-4">Register</h2>
+              <h2 className="text-2xl font-bold mb-4 text-[#5443c3]">Register</h2>
               {error && <div className="text-red-500 mb-4">{error}</div>}
               <form onSubmit={handleSubmit} className="w-full">
                 {[
@@ -80,7 +94,7 @@ export const Register = () => {
                   { label: 'Language', name: 'language', type: 'text' },
                 ].map((field, index) => (
                   <div className="mb-4" key={index}>
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>
+                    <label className="block text-[#5443c3] text-sm font-bold mb-2" htmlFor={field.name}>
                       {field.label}
                     </label>
                     <input
@@ -94,7 +108,7 @@ export const Register = () => {
                   </div>
                 ))}
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="grade">
+                  <label className="block text-[#5443c3] text-sm font-bold mb-2" htmlFor="grade">
                     Grade
                   </label>
                   <select
@@ -110,7 +124,7 @@ export const Register = () => {
                   </select>
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="group">
+                  <label className="block text-[#5443c3] text-sm font-bold mb-2" htmlFor="group">
                     Team Name
                   </label>
                   <select
@@ -129,7 +143,7 @@ export const Register = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#5443c3] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
                   >
                     Register
@@ -146,7 +160,8 @@ export const Register = () => {
             </div>
           </div>
         )}
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       </div>
-    </div>
-  );
+    </div>
+  );
 };
